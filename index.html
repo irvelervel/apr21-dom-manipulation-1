@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Accessing Elements in the DOM</title>
+
+    <style>
+      html {
+        font-family: sans-serif;
+        color: #333;
+      }
+      body {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 0 15px;
+      }
+      div div,
+      div article {
+        padding: 10px;
+        margin: 5px;
+        border: 1px solid #dedede;
+      }
+
+      /* querySelector and querySelectorAll work with selectors like these: */
+
+      /* #demo {
+        background-color: green;
+      } */
+
+      /* #demo div {
+        color: red;
+      } */
+
+      .new-class {
+        color: yellow;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Accessing Elements in the DOM</h1>
+
+    <div id="demo">
+      <h2 class="whatever">ID (#demo)</h2>
+      <div>Access me by ID</div>
+    </div>
+
+    <div>
+      <h2>Class (.demo)</h2>
+      <div class="demo">Access me by class (1)</div>
+      <div class="demo">Access me by class (2)</div>
+    </div>
+
+    <div>
+      <h2>Tag (article)</h2>
+      <div id="article-container">
+        <article>Access me by tag (1)</article>
+        <article>Access me by tag (2)</article>
+      </div>
+    </div>
+
+    <div id="demo-query">
+      <h2>Query Selector</h2>
+      <div>Access me by query</div>
+    </div>
+
+    <div>
+      <h2>Query Selector All</h2>
+      <div class="demo-query-all">Access me by query all (1)</div>
+      <div class="demo-query-all">Access me by query all (2)</div>
+    </div>
+
+    <h2>A more complex query</h2>
+    <div id="more-complex">
+      <ul>
+        <li>First element inside a list</li>
+        <li>Second element inside a list</li>
+        <li>Third element inside a list</li>
+      </ul>
+    </div>
+    <script>
+      console.log("hello!!!");
+
+      let firstDiv = document.getElementById("demo");
+      // it will return you AT MOST one element
+
+      let twoDivs = document.getElementsByClassName("different-demo");
+      // it will ALWAYS return you AN ARRAY
+
+      let allTheH2s = document.getElementsByTagName("h2");
+      // it will ALWAYS return you AN ARRAY
+
+      //   console.log(firstDiv);
+      //   console.log(twoDivs);
+      //   console.log(allTheH2s[2]);
+
+      let elementSelectedByCssQuery = document.querySelector(`#demo h2`);
+      // it will return you AT MOST one element
+      // we're selecting the <h2> child of the div with id="demo"
+
+      console.log(elementSelectedByCssQuery);
+
+      // --- you can expect every object we select to have a structure similar to this ---
+
+      //   elementSelectedByCssQuery = {
+      //       innerText: 'ID (#demo)',
+      //       classList: {
+      //          add: function(){
+      //            ...
+      //          },
+      //          remove: function(){
+      //            ...
+      //          }
+      //        },
+      //        style: {
+      //            color: 'black',
+      //            fontSize: '12px',
+      //            ...
+      //        },
+      //        ...and many other properties/methods
+      //   }
+
+      // if you already have the object to manipulate, just work with the properties/methods it offers:
+      elementSelectedByCssQuery.innerText = `Alina`;
+      elementSelectedByCssQuery.style.backgroundColor = "black";
+
+      // a function for programmatically add a class and change the font size of elementSelectedByCssQuery
+      const changeClass = function () {
+        elementSelectedByCssQuery.classList.add("new-class");
+        elementSelectedByCssQuery.style.fontSize = "50px";
+      };
+      // we need to invoke it for making its code executed. we can call it here:
+      //   changeClass()
+      // or we can call it into the browser console, writing changeClass() there and pressing enter
+
+      let allTheHeadings = document.querySelectorAll("h2");
+      // this will assign to allTheHeadings an array with all the <h2> elements found in the page
+      // if we have an array of elements, and we want to change a property in ALL of them,
+      // just cycle it with a for loop! :)
+
+      for (let i = 0; i < allTheHeadings.length; i++) {
+        allTheHeadings[i].style.color = "green";
+        // we're targeting one by one all the <h2> in the page:
+        // allTheHeadings[0] -> first <h2>
+        // allTheHeadings[1] -> second <h2>
+        // ...and so on
+      }
+    </script>
+    <!-- <script src="myCode.js"></script> -->
+    <!-- with this syntax you can embed external .js files to your html page -->
+  </body>
+</html>
